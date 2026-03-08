@@ -270,7 +270,7 @@ body {
 } */
 
 .info-divider {
-  width: 100%;
+  align-self: stretch;
   height: 1px;
   background: rgba(0, 207, 255, 0.25);
   margin: 2px 0;
@@ -296,7 +296,7 @@ body {
   right: -55px;
   z-index: 5;
   width: 400px;
-  height: 350px;
+  height: 400px;
 }
 
 .card-globe img {
