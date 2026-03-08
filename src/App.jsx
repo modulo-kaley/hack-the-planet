@@ -44,12 +44,14 @@ export default function App() {
       <p className="page-subtitle">&gt;_ LinkedIn Post Creator · CTF 2026</p>
 
       <div className="workspace">
-        <Card
-          role={role}
-          photoSrc={photoSrc}
-          photoTransform={photoTransform}
-          onPhotoClick={handlePhotoClick}
-        />
+        <div className="card-outer">
+          <Card
+            role={role}
+            photoSrc={photoSrc}
+            photoTransform={photoTransform}
+            onPhotoClick={handlePhotoClick}
+          />
+        </div>
 
         <Controls
           role={role}
