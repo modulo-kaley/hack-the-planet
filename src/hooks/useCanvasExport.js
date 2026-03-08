@@ -218,10 +218,16 @@ export function useCanvasExport() {
     // bottom:14px, right:14px, 185×185
     try {
       const logo = await loadImage('/logo.png')
+      const maxSize = 185
+      const scale = Math.min(maxSize / logo.naturalWidth, maxSize / logo.naturalHeight)
+      const drawW = logo.naturalWidth * scale
+      const drawH = logo.naturalHeight * scale
+      const drawX = W - 14 - maxSize + (maxSize - drawW) / 2
+      const drawY = 44 + (maxSize - drawH) / 2
       ctx.save()
       ctx.shadowColor = 'rgba(0,207,255,0.5)'
       ctx.shadowBlur = 16
-      ctx.drawImage(logo, W - 14 - 185, 44, 185, 185)
+      ctx.drawImage(logo, drawX, drawY, drawW, drawH)
       ctx.restore()
     } catch {
       // logo missing, skip
