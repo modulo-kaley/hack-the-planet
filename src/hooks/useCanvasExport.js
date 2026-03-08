@@ -171,51 +171,8 @@ export function useCanvasExport() {
     ctx.lineWidth = borderW
     ctx.stroke()
 
-    // ── INFO BLOCK ───────────────────────────────────────────────────────────
-    // top:185px, left:250px, padding-left:18px → content at x=268
-    const ix = 268
-    let iy = 185
-
-    // "MAR" + "20–21": Press Start 2P 18px, neon-blue, line-height:1.6
-    ctx.font = '18px "Press Start 2P"'
-    ctx.fillStyle = '#00CFFF'
-    ctx.shadowColor = 'rgba(0,207,255,0.35)'
-    ctx.shadowBlur = 12
-    ctx.fillText('MAR', ix, iy + 18)
-    ctx.fillText('20\u201321', ix, iy + 18 + Math.round(18 * 1.6))
-    ctx.shadowBlur = 0
-
-    iy += 18 + Math.round(18 * 1.6) + 18 + 6  // after both lines + gap
-
-    // "FRI – SAT · 2026": Share Tech Mono 11px
-    ctx.font = '11px "Share Tech Mono"'
-    ctx.fillStyle = 'rgba(0,207,255,0.55)'
-    ctx.fillText('FRI \u2013 SAT \u00B7 2026', ix, iy)
-
-    iy += 6 + 4
-
-    // Divider line
-    ctx.strokeStyle = 'rgba(0,207,255,0.25)'
-    ctx.lineWidth = 1
-    ctx.beginPath(); ctx.moveTo(ix, iy); ctx.lineTo(482, iy); ctx.stroke()
-
-    iy += 1 + 8
-
-    // "SAIT DOWNTOWN CAMPUS": Share Tech Mono 13px
-    ctx.font = '13px "Share Tech Mono"'
-    ctx.fillStyle = 'rgba(255,255,255,0.8)'
-    ctx.fillText('SAIT DOWNTOWN CAMPUS', ix, iy)
-
-    iy += 13 + 6
-
-    // "CALGARY, AB": Share Tech Mono 13px
-    ctx.fillStyle = '#00CFFF'
-    ctx.globalAlpha = 0.85
-    ctx.fillText('CALGARY, AB', ix, iy)
-    ctx.globalAlpha = 1
-
     // ── GLOBE LOGO ────────────────────────────────────────────────────────────
-    // bottom:14px, right:14px, 185×185
+    // Drawn before info block so text renders on top (matches z-index: 5 vs 6)
     try {
       const logo = await loadImage('/logo.png')
       // Match CSS: top:-55px, right:-55px, width:400px, height:400px, object-fit:contain
@@ -235,6 +192,54 @@ export function useCanvasExport() {
     } catch {
       // logo missing, skip
     }
+
+    // ── INFO BLOCK ───────────────────────────────────────────────────────────
+    // CSS: top:225px, left:250px, padding-left:18px, flex-col gap:6px
+    const ix = 268
+    let iy = 280
+
+    // "CYBERSECURITY CTF" — .loc: 11px Share Tech Mono, #00CFFF 0.85
+    ctx.font = '11px "Share Tech Mono"'
+    ctx.fillStyle = '#00CFFF'
+    ctx.globalAlpha = 0.85
+    ctx.fillText('CYBERSECURITY CTF', ix, iy + 11)
+    ctx.globalAlpha = 1
+    iy += 14 + 6  // item height + gap
+
+    // Divider (margin: 2px 0)
+    iy += 2
+    ctx.strokeStyle = 'rgba(0,207,255,0.25)'
+    ctx.lineWidth = 1
+    ctx.beginPath(); ctx.moveTo(ix, iy); ctx.lineTo(482, iy); ctx.stroke()
+    iy += 1 + 2 + 6  // line + margin-bottom + gap
+
+    // "20-21 MARCH 2026" — .date-big: Press Start 2P 12px, line-height:1.6
+    ctx.font = '12px "Press Start 2P"'
+    ctx.fillStyle = '#00CFFF'
+    ctx.shadowColor = 'rgba(0,207,255,0.35)'
+    ctx.shadowBlur = 12
+    ctx.fillText('20-21 MARCH 2026', ix, iy + 12)
+    ctx.shadowBlur = 0
+    iy += Math.round(12 * 1.6) + 6  // 19px + gap
+
+    // Divider (margin: 2px 0)
+    iy += 2
+    ctx.strokeStyle = 'rgba(0,207,255,0.25)'
+    ctx.lineWidth = 1
+    ctx.beginPath(); ctx.moveTo(ix, iy); ctx.lineTo(482, iy); ctx.stroke()
+    iy += 1 + 2 + 6  // line + margin-bottom + gap
+
+    // "SAIT DOWNTOWN CAMPUS" — .venue: 11px Share Tech Mono, white 0.8
+    ctx.font = '11px "Share Tech Mono"'
+    ctx.fillStyle = 'rgba(255,255,255,0.8)'
+    ctx.fillText('SAIT DOWNTOWN CAMPUS', ix, iy + 11)
+    iy += 14 + 6
+
+    // "CALGARY, AB" — .loc: 11px, #00CFFF 0.85
+    ctx.fillStyle = '#00CFFF'
+    ctx.globalAlpha = 0.85
+    ctx.fillText('CALGARY, AB', ix, iy + 11)
+    ctx.globalAlpha = 1
 
     // ── BOTTOM BAR ────────────────────────────────────────────────────────────
     ctx.strokeStyle = 'rgba(0,207,255,0.3)'
