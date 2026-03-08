@@ -218,12 +218,15 @@ export function useCanvasExport() {
     // bottom:14px, right:14px, 185×185
     try {
       const logo = await loadImage('/logo.png')
-      const maxSize = 185
-      const scale = Math.min(maxSize / logo.naturalWidth, maxSize / logo.naturalHeight)
-      const drawW = logo.naturalWidth * scale
-      const drawH = logo.naturalHeight * scale
-      const drawX = W - 14 - maxSize + (maxSize - drawW) / 2
-      const drawY = 44 + (maxSize - drawH) / 2
+      // Match CSS: top:-55px, right:-55px, width:400px, height:400px, object-fit:contain
+      const cW = 400, cH = 400
+      const cX = W - cW + 55  // right:-55px → right edge at W+55, left edge at W+55-400
+      const cY = -55
+      const s = Math.min(cW / logo.naturalWidth, cH / logo.naturalHeight)
+      const drawW = logo.naturalWidth * s
+      const drawH = logo.naturalHeight * s
+      const drawX = cX + (cW - drawW) / 2
+      const drawY = cY + (cH - drawH) / 2
       ctx.save()
       ctx.shadowColor = 'rgba(0,207,255,0.5)'
       ctx.shadowBlur = 16
