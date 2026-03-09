@@ -196,7 +196,7 @@ export function useCanvasExport() {
     // ── INFO BLOCK ───────────────────────────────────────────────────────────
     // CSS: top:225px, left:250px, padding-left:18px, flex-col gap:6px
     const ix = 268
-    let iy = 315
+    let iy = 300
 
     // "CYBERSECURITY CTF" — .loc: 11px Share Tech Mono, #00CFFF 0.85
     ctx.font = '11px "Share Tech Mono"'
